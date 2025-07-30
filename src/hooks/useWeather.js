@@ -5,6 +5,6 @@ export function useWeather({ location, startDate, endDate }) {
   return useQuery({
     queryKey: ["weather", location, startDate, endDate],
     queryFn: () => getWeather({ location, startDate, endDate }),
-    enabled: !!location,
+    enabled: false,
   });
 }
