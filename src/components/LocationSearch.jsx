@@ -7,6 +7,7 @@ import {
   Stack,
   Backdrop,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useAppContext } from "../hooks/useAppContext";
@@ -26,6 +27,12 @@ const LocationSearch = () => {
     refetch();
   };
 
+  const handleOnKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleOnClickSearch();
+    }
+  };
+
   useEffect(() => {
     if (isError) {
       setWeatherData(null);
@@ -41,6 +48,7 @@ const LocationSearch = () => {
       <Stack direction="row" spacing={2}>
         <FormControl fullWidth>
           <OutlinedInput
+            placeholder="Enter location"
             startAdornment={
               <InputAdornment position="start">
                 <SearchIcon />
@@ -48,6 +56,7 @@ const LocationSearch = () => {
             }
             value={location}
             onChange={(e) => setLocation(e.target.value)}
+            onKeyDown={handleOnKeyDown}
           />
         </FormControl>
         <Button
@@ -61,7 +70,16 @@ const LocationSearch = () => {
       </Stack>
 
       <Backdrop open={isFetching}>
-        <CircularProgress color="inherit" />
+        <Stack spacing={2} alignItems="center" justifyContent="center">
+          <CircularProgress
+            sx={{
+              color: "white",
+            }}
+          />
+          <Typography variant="caption" color="white">
+            Loading weather data for "{location}"...
+          </Typography>
+        </Stack>
       </Backdrop>
     </>
   );
