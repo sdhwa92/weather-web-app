@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   OutlinedInput,
@@ -14,17 +14,14 @@ import { useAppContext } from "../hooks/useAppContext";
 import { useWeather } from "../hooks/useWeather";
 
 const LocationSearch = () => {
+  const [searchText, setSearchText] = useState("");
   const { location, setLocation, setWeatherData } = useAppContext();
-  const { refetch, data, isError, isSuccess, isFetching } = useWeather({
-    location,
-    startDate: null,
-    endDate: null,
-  });
+  const { refetch, data, isError, isSuccess, isFetching } = useWeather();
 
   const handleOnClickSearch = () => {
-    if (!location) return; // Prevent search if location is empty
+    if (!searchText) return; // Prevent search if location is empty
 
-    refetch();
+    setLocation(searchText);
   };
 
   const handleOnKeyDown = (e) => {
@@ -32,6 +29,12 @@ const LocationSearch = () => {
       handleOnClickSearch();
     }
   };
+
+  useEffect(() => {
+    if (location) {
+      refetch();
+    }
+  }, [location, refetch]);
 
   useEffect(() => {
     if (isError) {
@@ -46,7 +49,7 @@ const LocationSearch = () => {
   return (
     <>
       <Stack direction="row" spacing={2}>
-        <FormControl fullWidth>
+        <FormControl fullWidth size="small">
           <OutlinedInput
             placeholder="Enter location"
             startAdornment={
@@ -54,8 +57,8 @@ const LocationSearch = () => {
                 <SearchIcon />
               </InputAdornment>
             }
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
             onKeyDown={handleOnKeyDown}
           />
         </FormControl>
@@ -63,7 +66,7 @@ const LocationSearch = () => {
           variant="contained"
           onClick={handleOnClickSearch}
           loading={isFetching}
-          disabled={!location || isFetching}
+          disabled={!searchText || isFetching}
         >
           Search
         </Button>

@@ -4,8 +4,8 @@ import { AppContext } from "./context/AppContext";
 
 export const AppProvider = ({ children }) => {
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(DateTime.now().year);
-  const [month, setMonth] = useState(DateTime.now().month);
+  const [selectedDate, setSelectedDate] = useState(DateTime.now());
+  const [numberOfDays, setNumberOfDays] = useState(7);
   const [weatherData, setWeatherData] = useState(null);
 
   return (
@@ -13,10 +13,10 @@ export const AppProvider = ({ children }) => {
       value={{
         location,
         setLocation,
-        year,
-        setYear,
-        month,
-        setMonth,
+        selectedDate,
+        setSelectedDate,
+        numberOfDays,
+        setNumberOfDays,
         weatherData,
         setWeatherData,
       }}

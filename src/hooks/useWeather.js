@@ -1,16 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { DateTime } from "luxon";
 import { getWeather } from "../api";
 import { useAppContext } from "./useAppContext";
 
-export function useWeather({ location }) {
-  const { month, year } = useAppContext();
+export function useWeather() {
+  const { location, selectedDate, numberOfDays } = useAppContext();
 
-  const startDate = DateTime.fromObject({ year, month })
-    .startOf("month")
-    .toFormat("yyyy-MM-dd");
-  const endDate = DateTime.fromObject({ year, month })
-    .endOf("month")
+  const startDate = selectedDate.toFormat("yyyy-MM-dd");
+  const endDate = selectedDate
+    .plus({ days: numberOfDays - 1 })
     .toFormat("yyyy-MM-dd");
 
   return useQuery({
@@ -20,7 +17,7 @@ export function useWeather({ location }) {
         return Promise.reject(new Error("Location is required"));
       }
 
-      return getWeather({ location });
+      return getWeather({ location, startDate, endDate });
     },
     enabled: false,
   });
