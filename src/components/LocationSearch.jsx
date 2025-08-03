@@ -72,7 +72,13 @@ const LocationSearch = () => {
         </Button>
       </Stack>
 
-      <Backdrop open={isFetching}>
+      <Backdrop
+        open={isFetching}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginTop: "0px !important",
+        }}
+      >
         <Stack spacing={2} alignItems="center" justifyContent="center">
           <CircularProgress
             sx={{
