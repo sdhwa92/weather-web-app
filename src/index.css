@@ -1,3 +1,6 @@
 body {
   margin: 0;
+  background-image: url("./assets/sky.jpg");
+  background-size: cover;
+  background-position: center;
 }

@@ -1,8 +1,12 @@
 import axios from "axios";
 import { config } from "./config";
 
-export const getWeather = async ({ location, startDate, endDate }) => {
+export const getWeather = async ({ apiKey, location, startDate, endDate }) => {
   try {
+    if (!apiKey) {
+      throw new Error("API key is required");
+    }
+
     let url = location;
 
     if (startDate) {
@@ -16,7 +20,7 @@ export const getWeather = async ({ location, startDate, endDate }) => {
     const response = await axios.get(url, {
       baseURL: config.baseUrl,
       params: {
-        key: config.apiKey,
+        key: apiKey,
         unitGroup: config.unitGroup,
         contentType: config.contentType,
       },

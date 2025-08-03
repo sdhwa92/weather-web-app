@@ -5,6 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import App from "./App.jsx";
 import { AppProvider } from "./AppProvider.jsx";
+import { config } from "./config.js";
 
 import "./index.css";
 
@@ -19,7 +20,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <LocalizationProvider dateAdapter={AdapterLuxon}>
-        <AppProvider>
+        <AppProvider apiKey={config.apiKey}>
           <App />
         </AppProvider>
       </LocalizationProvider>
