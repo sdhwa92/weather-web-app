@@ -58,6 +58,21 @@ function App() {
               <LocationSearch />
               <OtherFilters />
               {weatherData && <WeatherTable data={weatherData} />}
+              {!weatherData && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
+                  <Typography variant="body1" color="textSecondary">
+                    No weather data available. Please enter a location to
+                    search.
+                  </Typography>
+                </Box>
+              )}
             </Stack>
           </Paper>
         </Box>
